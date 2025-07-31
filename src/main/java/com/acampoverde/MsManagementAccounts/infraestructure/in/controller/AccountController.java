@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.*;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,14 +43,14 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> saveAccount(@RequestBody AccountDto account) {
+    public ResponseEntity<AccountDto> saveAccount(@Valid @RequestBody AccountDto account) {
         AccountDto accountDto = accountHandler.saveAccount(account);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(accountDto.getIdCuenta()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping
-    public ResponseEntity<AccountDto> updateAccount(@RequestBody AccountDto account) {
+    public ResponseEntity<AccountDto> updateAccount(@Valid @RequestBody AccountDto account) {
         return new ResponseEntity<>(accountHandler.updateAccount(account), OK);
     }
 

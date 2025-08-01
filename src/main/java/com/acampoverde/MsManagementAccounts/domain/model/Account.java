@@ -1,6 +1,8 @@
 
 package com.acampoverde.MsManagementAccounts.domain.model;
 
+import java.util.List;
+
 
 public class Account {
 
@@ -9,6 +11,35 @@ public class Account {
     private String accountType;
     private Double initialBalance;
     private Boolean status;
+    
+     private Integer customerId;
+
+    private List<Movement> movements;
+
+    public Account() {
+    }
+
+    
+    public Account(Integer idCuenta, String accountNumber, String accountType, Double initialBalance, Boolean status, Integer customerId) {
+        this.idCuenta = idCuenta;
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+        this.initialBalance = initialBalance;
+        this.status = status;
+        this.customerId = customerId;
+    }
+
+    public Account(Integer idCuenta, String accountNumber, String accountType, Double initialBalance, Boolean status, Integer customerId, List<Movement> movements) {
+        this.idCuenta = idCuenta;
+        this.accountNumber = accountNumber;
+        this.accountType = accountType;
+        this.initialBalance = initialBalance;
+        this.status = status;
+        this.customerId = customerId;
+        this.movements = movements;
+    }
+    
+    
 
     public Integer getIdCuenta() {
         return idCuenta;
@@ -49,7 +80,24 @@ public class Account {
     public void setStatus(Boolean status) {
         this.status = status;
     }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
+    }
+
+    public List<Movement> getMovements() {
+        return movements;
+    }
+
+    public void setMovements(List<Movement> movements) {
+        this.movements = movements;
+    }
     
     
 
+    
 }

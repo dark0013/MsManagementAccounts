@@ -19,5 +19,7 @@ public class AccountDto {
     private Double initialBalance;
     @NotNull
     private Boolean status;
+    
+      private Integer customerId;
 
 }

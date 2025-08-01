@@ -1,5 +1,6 @@
 package com.acampoverde.MsManagementAccounts.infraestructure.in.exception;
 
+import com.acampoverde.MsManagementAccounts.application.exception.AccountMovementNotFoundException;
 import com.acampoverde.MsManagementAccounts.application.exception.AccountNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -19,6 +20,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccountNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleAccountNotFound(AccountNotFoundException ex, HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Not Found", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(AccountMovementNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleAccountMovementNotFoundException(AccountMovementNotFoundException ex, HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), "Not Found", ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }

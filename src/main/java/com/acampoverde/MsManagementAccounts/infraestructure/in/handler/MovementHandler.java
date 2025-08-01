@@ -4,21 +4,40 @@
  */
 package com.acampoverde.MsManagementAccounts.infraestructure.in.handler;
 
+import com.acampoverde.MsManagementAccounts.domain.model.Movement;
+import com.acampoverde.MsManagementAccounts.domain.port.in.IAccountMovementServicePort;
 import com.acampoverde.MsManagementAccounts.infraestructure.in.dto.MovementDto;
+import com.acampoverde.MsManagementAccounts.infraestructure.in.mapper.IMovementMapper;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class MovementHandler {
 
-    public MovementDto findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private final IAccountMovementServicePort movimentService;
+    private final IMovementMapper movementMapper;
+
+    public MovementHandler(IAccountMovementServicePort movimentService, IMovementMapper movementMapper) {
+        this.movimentService = movimentService;
+        this.movementMapper = movementMapper;
+    }
+
+    public MovementDto findById(Integer id) {
+        Movement movementObj = movimentService.findById(id);
+        return movementMapper.toDto(movementObj);
     }
 
     public List<MovementDto> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return movimentService.findAll()
+                .stream()
+                .map(movementMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     public MovementDto save(MovementDto transaction) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Movement movement = movementMapper.toDomain(transaction);
+        Movement movementObj = movimentService.save(movement);
+        return movementMapper.toDto(movementObj);
     }
 }

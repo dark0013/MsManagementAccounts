@@ -12,6 +12,7 @@ import com.acampoverde.MsManagementAccounts.infraestructure.out.persistence.mapp
 import com.acampoverde.MsManagementAccounts.infraestructure.out.persistence.repository.IMovementRepository;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -38,7 +39,9 @@ public class MovementRepository implements IAccountMovementRepositoryPort {
 
     @Override
     public List<Movement> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return movementRepository.findAll().stream()
+                .map(accountMovementRepositoryMapper::toDomain)
+                .collect(Collectors.toList());
     }
 
     @Override
